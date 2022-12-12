@@ -1,7 +1,7 @@
 #include "../hpp/Grammar.hpp"
 
 Rule::Rule(char terminal, const std::string& rule) {
-  terminal_ = terminal;
+  terminal_ = Letter(terminal);
   rule_.resize(rule.size());
   for (int i = 0; i < rule.size(); i++) {
     rule_[i] = Letter(rule[i]);
@@ -9,7 +9,7 @@ Rule::Rule(char terminal, const std::string& rule) {
 }
 
 Rule::Rule(const std::string& string) {
-  terminal_ = string[0];
+  terminal_.letter_ = string[0];
   rule_.resize(string.size() - 3);
   for (int i = 3; i < string.size(); i++) {
     rule_[i - 3] = Letter(string[i]);
@@ -17,14 +17,16 @@ Rule::Rule(const std::string& string) {
 }
 
 Rule::Rule(const Rule& other_rule) {
+  // оператор кописрования
   terminal_ = other_rule.terminal_;
+  rule_.resize(other_rule.rule_.size());
   for (int i = 0; i < other_rule.rule_.size(); i++) {
     rule_[i] = other_rule.rule_[i];
   }
 }
 
 bool Rule::operator!=(const Rule& other_rule) const {
-  return (*this == other_rule);
+  return !(*this == other_rule);
 }
 
 bool Rule::operator==(const Rule& other_rule) const {
@@ -70,7 +72,7 @@ bool Rule::operator<(const Rule& other_rule) const {
 }
 
 bool Rule::operator>(const Rule& other_rule) const {
-  return (*this < other_rule);
+  return !(*this < other_rule);
 }
 
 

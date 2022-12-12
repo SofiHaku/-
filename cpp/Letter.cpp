@@ -1,14 +1,14 @@
 #include "../hpp/Letter.hpp"
 
 Letter::Letter(char letter) {
-  char letter_ = letter;
+  letter_ = letter;
   // Если буква большая, то терминал
-  bool terminal_ = isupper(letter);
+  terminal_ = !isupper(letter);
 }
 
 Letter::Letter(const Letter& other_letter) {
-  char letter_ = other_letter.letter_;
-  bool terminal_ = other_letter.letter_;
+  letter_ = other_letter.letter_;
+  terminal_ = other_letter.terminal_;
 }
 
 bool Letter::operator==(const Letter& other_letter) const {
@@ -35,5 +35,5 @@ char Letter::GetLetter() const{
 
 void Letter::SetLetter(char letter) {
   letter_ = letter;
-  bool terminal_ = isupper(letter);
+  terminal_ = !isupper(letter);
 }

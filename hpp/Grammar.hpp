@@ -5,10 +5,10 @@
 
 class Rule {
 private:
-  Letter terminal_;
-  std::vector<Letter> rule_;
 
 public:
+  Letter terminal_;
+  std::vector<Letter> rule_;
   Rule() {};
   Rule(char terminal, const std::string& rule);
   Rule(const std::string& string);
@@ -23,9 +23,8 @@ public:
 };
 
 class Grammar {
-private:
-  std::vector<Rule> rules_;
 public:
+  std::vector<Rule> rules_;
   Rule GetRule(int i) const;
   void SetRule(const std::string& rule);
   void SetRule(const Rule& rule);

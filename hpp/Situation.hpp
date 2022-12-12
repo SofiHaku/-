@@ -1,25 +1,25 @@
-#include "Grammar.hpp"
 
-/*
-  В терминологии лектора -
-  index - заполненная точка
-  parent_index - пустая точка
-*/
+#include "../hpp/Grammar.hpp"
+#include <tuple>
 
 class Situation {
- private:
-  Rule rule_;
-  int index_;
-  int parent_index_;
-
  public:
-  Situation(const Rule& rule, int index, int parent_index);
-  Situation(const Situation& other);
-  int Size() const;
-  bool IsTerminal(int index) const;
-  char GetNextLetter() const;
-  Situation GetNextSituation() const;
-  int GetParent() const { return parent_index_; };
-  Rule GetRule() const { return rule_; };
+  Situation(const Rule& rule, int parent_index, int index);
+  Situation(const Situation& other_sim);
+
+  bool operator==(const Situation& other) const;
   bool operator<(const Situation& other) const;
+
+  Rule GetRule() const;
+  int GetIndex() const;
+  int GetParentIndex() const;
+
+  bool IndexTerminal() const;
+  bool IsEnd() const;
+  char NextLetter() const;
+
+private:
+  Rule rule_;
+  int parent_index_;
+  int index_;
 };

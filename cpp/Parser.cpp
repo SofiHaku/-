@@ -1,83 +1,90 @@
 #include "../hpp/Parser.hpp"
 
-bool ParserEarley::Earley(const std::string& word, Grammar grammar) {
-  word_ = word;
+bool ParserEarley::Check(Grammar grammar, const std::string &word) {
   grammar_ = grammar;
-  
-  situation_.clear();
-  situation_.resize(word.size() + 1);
+  word_ = word;
 
-  grammar.SetRule(Rule("S->S"));
-  situation_[0].insert(Situation(Rule("S->S"), 0, 0));
+  // очищаем на случай, если уже использовати
+  situations_.clear();
+  situations_.resize(word.size() + 1);
 
-  for (int i = 0; i < word.size() + 1; i++) {
-    Scan(i);
-    size_t old_situation_list_size = 0;
-    
-    do {
-      old_situation_list_size = situation_[i].size();
-      Complete(i);
-      Predict(i);
-    } while (situation_[i].size() != old_situation_list_size);
+  // вводим дополнительное состояние, которое
+  // характеризует начало
+  grammar_.SetRule(Rule("~->S"));
+  Situation dop_start = Situation(Rule("~->S"), 0, 0);
+  situations_[0].insert(dop_start);
+
+  for (int index = 0; index < word.size() + 1; index++) {
+    // занесли первую итерациб в цикл for
+    Scan(index);
+    int old_value = situations_[index].size();
+
+    Complete(index);
+    Predict(index);
+
+    while (situations_[index].size() != old_value) {
+      old_value = situations_[index].size();
+      Complete(index);
+      Predict(index);
+    }
   }
-
-  Situation final_situation = Situation(Rule("S->S"), 0, 0).GetNextSituation();
-  const std::set<Situation>& last_situation_list = situation_[word.size()];
-  return (last_situation_list.find(final_situation) != last_situation_list.end());
+  return (situations_[word.size()].find(Situation(
+              dop_start.GetRule(), dop_start.GetParentIndex(),
+              dop_start.GetIndex() + 1)) != situations_[word.size()].end());
 }
-
 
 void ParserEarley::Scan(int index) {
   if (index == 0) {
     return;
   }
-
-  for (const Situation& situation : situation_[index - 1]) {
-    if (index == situation.Size()) {
+  for (std::set<Situation>::iterator it = situations_[index - 1].begin();
+       it != situations_[index - 1].end(); ++it) {
+    if (it->IndexTerminal()) {
       continue;
     }
-    if (situation.IsTerminal(index)) {
+    if (word_[index - 1] != it->NextLetter()) {
       continue;
     }
-
-    if (situation.GetNextLetter() == word_[index - 1]) {
-      situation_[index].insert(situation.GetNextSituation());
-    }
+    situations_[index].insert(
+        Situation(it->GetRule(), it->GetParentIndex(), it->GetIndex() + 1));
   }
 }
 
 void ParserEarley::Predict(int index) {
-  for (Situation situation : situation_[index]) {
-    if (index != situation.Size()) {
+  for (std::set<Situation>::iterator it = situations_[index].begin();
+       it != situations_[index].end(); ++it) {
+    if (it->IsEnd()) {
       continue;
     }
-    if (!situation.IsTerminal(index)) {
+    if (!it->IndexTerminal()) {
       continue;
     }
-    for (const Rule& rule : grammar_.GetRules()) {
-      if (situation.GetNextLetter() == rule.GetTerminal()) {
-        situation_[index].emplace(rule, index, 0);
+    for (int i = 0; i < grammar_.rules_.size(); i++) {
+      if (it->NextLetter() == grammar_.rules_[i].terminal_.letter_) {
+        situations_[index].emplace(grammar_.rules_[i], index, 0);
       }
     }
   }
 }
 
 void ParserEarley::Complete(int index) {
-  for (const Situation& situation : situation_[index]) {
-    if (index == situation.Size()) {
+  for (std::set<Situation>::iterator it = situations_[index].begin();
+       it != situations_[index].end(); ++it) {
+    if (it->GetIndex() != it->GetRule().rule_.size()) {
       continue;
     }
-    if (situation.IsTerminal(index)) {
-      continue;
-    }
-    for (const Situation& other_situation : situation_[situation.GetParent()]) {
-      if (index != other_situation.Size()) {
+    for (std::set<Situation>::iterator parent_it =
+             situations_[it->GetParentIndex()].begin();
+         parent_it != situations_[it->GetParentIndex()].end(); ++parent_it) {
+      if (parent_it->IsEnd()) {
         continue;
       }
-      
-      if (other_situation.GetNextLetter() == situation.GetRule().GetTerminal()) {
-        situation_[index].insert(other_situation.GetNextSituation());
+      if (parent_it->NextLetter() != it->GetRule().terminal_.letter_) {
+        continue;
       }
+      situations_[index].insert(Situation(parent_it->GetRule(),
+                                          parent_it->GetParentIndex(),
+                                          parent_it->GetIndex() + 1));
     }
   }
 }

@@ -3,8 +3,6 @@
 
 class Letter {
  private:
-  char letter_;
-  bool terminal_;
  public:
   Letter() {}
   Letter(const Letter& other_letter);
@@ -14,4 +12,6 @@ class Letter {
   void SetLetter(char letter);
   bool operator==(const Letter& other_letter) const;
   bool operator!=(const Letter& other_letter) const;
+  char letter_;
+  bool terminal_;
 };
