@@ -13,4 +13,5 @@ class Letter {
   char GetLetter() const;
   void SetLetter(char letter);
   bool operator==(const Letter& other_letter) const;
+  bool operator!=(const Letter& other_letter) const;
 };
