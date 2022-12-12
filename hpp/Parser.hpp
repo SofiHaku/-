@@ -16,5 +16,5 @@ class ParserEarley {
   void Complete(int index);
 
  public:
-  bool Check(Grammar grammar, const std::string& word);
+  bool Earley(const std::string& word, Grammar grammar);
 };

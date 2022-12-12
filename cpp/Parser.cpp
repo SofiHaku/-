@@ -1,6 +1,6 @@
 #include "../hpp/Parser.hpp"
 
-bool ParserEarley::Check(Grammar grammar, const std::string &word) {
+bool ParserEarley::Earley(const std::string &word, Grammar grammar) {
   grammar_ = grammar;
   word_ = word;
 
@@ -39,7 +39,7 @@ void ParserEarley::Scan(int index) {
   }
   for (std::set<Situation>::iterator it = situations_[index - 1].begin();
        it != situations_[index - 1].end(); ++it) {
-    if (it->IndexTerminal()) {
+    if (it->IndexIsTerminal()) {
       continue;
     }
     if (word_[index - 1] != it->NextLetter()) {
@@ -56,11 +56,11 @@ void ParserEarley::Predict(int index) {
     if (it->IsEnd()) {
       continue;
     }
-    if (!it->IndexTerminal()) {
+    if (!it->IndexIsTerminal()) {
       continue;
     }
     for (int i = 0; i < grammar_.rules_.size(); i++) {
-      if (it->NextLetter() == grammar_.rules_[i].terminal_.letter_) {
+      if (it->NextLetter() == grammar_.rules_[i].GetTerminal()) {
         situations_[index].emplace(grammar_.rules_[i], index, 0);
       }
     }
@@ -70,7 +70,7 @@ void ParserEarley::Predict(int index) {
 void ParserEarley::Complete(int index) {
   for (std::set<Situation>::iterator it = situations_[index].begin();
        it != situations_[index].end(); ++it) {
-    if (it->GetIndex() != it->GetRule().rule_.size()) {
+    if (it->GetIndex() != it->GetRule().GetSizeRule()) {
       continue;
     }
     for (std::set<Situation>::iterator parent_it =
@@ -79,7 +79,7 @@ void ParserEarley::Complete(int index) {
       if (parent_it->IsEnd()) {
         continue;
       }
-      if (parent_it->NextLetter() != it->GetRule().terminal_.letter_) {
+      if (parent_it->NextLetter() != it->GetRule().GetTerminal()) {
         continue;
       }
       situations_[index].insert(Situation(parent_it->GetRule(),

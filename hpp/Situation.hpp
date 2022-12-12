@@ -6,15 +6,14 @@ class Situation {
  public:
   Situation(const Rule& rule, int parent_index, int index);
   Situation(const Situation& other_sim);
-
-  bool operator==(const Situation& other) const;
+  
   bool operator<(const Situation& other) const;
 
   Rule GetRule() const;
   int GetIndex() const;
   int GetParentIndex() const;
 
-  bool IndexTerminal() const;
+  bool IndexIsTerminal() const;
   bool IsEnd() const;
   char NextLetter() const;
 

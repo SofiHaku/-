@@ -1,15 +1,7 @@
 #include "../hpp/Grammar.hpp"
 
-Rule::Rule(char terminal, const std::string& rule) {
-  terminal_ = Letter(terminal);
-  rule_.resize(rule.size());
-  for (int i = 0; i < rule.size(); i++) {
-    rule_[i] = Letter(rule[i]);
-  }
-}
-
 Rule::Rule(const std::string& string) {
-  terminal_.letter_ = string[0];
+  terminal_.SetLetter(string[0]);
   rule_.resize(string.size() - 3);
   for (int i = 3; i < string.size(); i++) {
     rule_[i - 3] = Letter(string[i]);
@@ -23,26 +15,6 @@ Rule::Rule(const Rule& other_rule) {
   for (int i = 0; i < other_rule.rule_.size(); i++) {
     rule_[i] = other_rule.rule_[i];
   }
-}
-
-bool Rule::operator!=(const Rule& other_rule) const {
-  return !(*this == other_rule);
-}
-
-bool Rule::operator==(const Rule& other_rule) const {
-  if (terminal_ != other_rule.terminal_) {
-    return false;
-  }
-  if (rule_.size() != other_rule.rule_.size()) {
-    return false;
-  }
-  
-  for (int i = 0; i < rule_.size(); i++) {
-    if (rule_[i] != other_rule.rule_[i]) {
-      return false;
-    }
-  }
-  return true;
 }
 
 bool Rule::operator<(const Rule& other_rule) const {
@@ -71,15 +43,6 @@ bool Rule::operator<(const Rule& other_rule) const {
   return false;
 }
 
-bool Rule::operator>(const Rule& other_rule) const {
-  return !(*this < other_rule);
-}
-
-
-Rule Grammar::GetRule(int i) const{
-  return rules_[i];
-}
-
 void Grammar::SetRule(const std::string& rule) {
   Rule new_rule = Rule(rule);
   rules_.push_back(new_rule);
@@ -89,18 +52,14 @@ void Grammar::SetRule(const Rule& rule) {
   rules_.push_back(rule);
 }
 
-int Rule::Size() const{
+int Rule::GetSizeRule() const {
   return rule_.size();
 }
 
-Letter Rule::GetLetter(int index) const {
+Letter Rule::GetLetterRight(int index) const {
   return rule_[index];
 }
 
 char Rule::GetTerminal() const {
   return terminal_.GetLetter();
-}
-
-std::vector<Rule> Grammar::GetRules() const {
-  return rules_;
 }

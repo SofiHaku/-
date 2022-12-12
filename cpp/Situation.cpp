@@ -13,23 +13,23 @@ Situation::Situation(const Situation& other_sim) {
   index_ = other_sim.index_;
 }
 
-bool Situation::IndexTerminal() const {
-  if (index_ == rule_.rule_.size()) {
+bool Situation::IndexIsTerminal() const {
+  if (index_ == rule_.GetSizeRule()) {
     return true;
   }
 
-  return !rule_.rule_[index_].terminal_;
+  return rule_.GetLetterRight(index_).GetIsTerminal();
 }
 
 bool Situation::IsEnd() const {
-  if (index_ == rule_.rule_.size()) {
+  if (index_ == rule_.GetSizeRule()) {
     return true;
   }
   return false;
 }
 
 char Situation::NextLetter() const {
-  return rule_.rule_[index_].letter_;
+  return rule_.GetLetterRight(index_).GetLetter();
 }
 
 Rule Situation::GetRule() const {
@@ -42,20 +42,6 @@ int Situation::GetIndex() const {
 
 int Situation::GetParentIndex() const {
   return parent_index_;
-}
-
-
-bool Situation::operator==(const Situation& other) const {
-  if (rule_ != other.rule_) {
-    return false;
-  }
-  if (parent_index_ != other.parent_index_) {
-    return false;
-  }
-  if (index_ != other.index_) {
-    return false;
-  }
-  return true;
 }
 
 bool Situation::operator<(const Situation& other) const {

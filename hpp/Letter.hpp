@@ -3,15 +3,13 @@
 
 class Letter {
  private:
+  char letter_;
+  bool is_terminal_;
  public:
   Letter() {}
   Letter(const Letter& other_letter);
   Letter(char letter);
-  bool GetTerminal() const;
+  bool GetIsTerminal() const;
   char GetLetter() const;
   void SetLetter(char letter);
-  bool operator==(const Letter& other_letter) const;
-  bool operator!=(const Letter& other_letter) const;
-  char letter_;
-  bool terminal_;
 };
