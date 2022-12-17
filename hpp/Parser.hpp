@@ -1,3 +1,4 @@
+#pragma once
 #include "../hpp/Grammar.hpp"
 #include "../hpp/Letter.hpp"
 #include <set>
@@ -14,13 +15,15 @@ class ParserCYK {
   void ProcessWord(size_t size_word);
 
  public:
-  bool Check_word(std::string &word, Grammar& grammar);
+  bool Check_word(std::string &word, Grammar grammar);
   ParserCYK() {}
 };
 
-bool ParserCYK::Check_word(std::string &word, Grammar& grammar) {
+bool ParserCYK::Check_word(std::string &word, Grammar grammar) {
   word_ = word;
   grammar_ = grammar;
+
+  dp.clear();
 
   for (auto i : grammar.terminal_) {
     std::pair<char, std::vector<std::vector<bool>>> new_pair(
@@ -38,6 +41,8 @@ bool ParserCYK::Check_word(std::string &word, Grammar& grammar) {
   for (size_t size_word = 2; size_word < word_.size() + 1; size_word++) {
     ProcessWord(size_word);
   }
+
+  /*
   std::cout << "A\n";
   for (int i = 0; i < word_.size() + 1; i++) {
     for (int j = 0; j < word_.size() + 1; j++) {
@@ -60,7 +65,7 @@ bool ParserCYK::Check_word(std::string &word, Grammar& grammar) {
       std::cout << dp.at('S')[i][j] << " ";
     }
     std::cout << "\n";
-  }
+  } */
 
   return dp.at('S')[0][word_.size() - 1];
 }

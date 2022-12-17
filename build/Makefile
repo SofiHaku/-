@@ -298,30 +298,6 @@ cpp/Parser.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mytests.dir/build.make CMakeFiles/mytests.dir/cpp/Parser.cpp.s
 .PHONY : cpp/Parser.cpp.s
 
-cpp/Situation.o: cpp/Situation.cpp.o
-.PHONY : cpp/Situation.o
-
-# target to build an object file
-cpp/Situation.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mytests.dir/build.make CMakeFiles/mytests.dir/cpp/Situation.cpp.o
-.PHONY : cpp/Situation.cpp.o
-
-cpp/Situation.i: cpp/Situation.cpp.i
-.PHONY : cpp/Situation.i
-
-# target to preprocess a source file
-cpp/Situation.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mytests.dir/build.make CMakeFiles/mytests.dir/cpp/Situation.cpp.i
-.PHONY : cpp/Situation.cpp.i
-
-cpp/Situation.s: cpp/Situation.cpp.s
-.PHONY : cpp/Situation.s
-
-# target to generate assembly for a file
-cpp/Situation.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mytests.dir/build.make CMakeFiles/mytests.dir/cpp/Situation.cpp.s
-.PHONY : cpp/Situation.cpp.s
-
 tests.o: tests.cpp.o
 .PHONY : tests.o
 
@@ -372,9 +348,6 @@ help:
 	@echo "... cpp/Parser.o"
 	@echo "... cpp/Parser.i"
 	@echo "... cpp/Parser.s"
-	@echo "... cpp/Situation.o"
-	@echo "... cpp/Situation.i"
-	@echo "... cpp/Situation.s"
 	@echo "... tests.o"
 	@echo "... tests.i"
 	@echo "... tests.s"

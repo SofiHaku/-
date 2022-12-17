@@ -5,8 +5,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/mytests.dir/cpp/Letter.cpp.o.d"
   "CMakeFiles/mytests.dir/cpp/Parser.cpp.o"
   "CMakeFiles/mytests.dir/cpp/Parser.cpp.o.d"
-  "CMakeFiles/mytests.dir/cpp/Situation.cpp.o"
-  "CMakeFiles/mytests.dir/cpp/Situation.cpp.o.d"
   "CMakeFiles/mytests.dir/tests.cpp.o"
   "CMakeFiles/mytests.dir/tests.cpp.o.d"
   "mytests"

@@ -14,7 +14,7 @@ void ParserCYK::InitOneLetters() {
 }
 
 void ParserCYK::ProcessWord(size_t size_word) {
-  for (int left = 0; left < word_.size() + 1; left++) {
+  for (int left = 0; left < word_.size() - size_word + 1; left++) {
     int right = left + size_word - 1;
     std::vector<Rule> rules = grammar_.GetRules();
     for (int j = 0; j < rules.size(); j++) {
