@@ -12,6 +12,13 @@ int main () {
     grammar.SetRule(str);
   }
   grammar.PrintRules();
+  std::string word = "aaabbaaa";
+  ParserCYK parser;
+  if (parser.Check_word(word, grammar)) {
+    std::cout << "YES\n";
+  } else {
+    std::cout << "NO\n";
+  }
 
   return 0;
 }

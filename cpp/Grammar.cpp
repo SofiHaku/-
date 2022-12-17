@@ -47,6 +47,12 @@ bool Rule::operator<(const Rule& other_rule) const {
 void Grammar::SetRule(const std::string& rule) {
   Rule new_rule = Rule(rule);
   rules_.push_back(new_rule);
+
+  std::vector<Letter> rul = new_rule.GetRule();
+
+  if (terminal_.find(new_rule.GetTerminal()) == terminal_.end()) {
+    terminal_.insert(new_rule.GetTerminal());
+  }
 }
 
 void Grammar::SetRule(const Rule& rule) {
@@ -55,6 +61,10 @@ void Grammar::SetRule(const Rule& rule) {
 
 int Rule::GetSizeRule() const {
   return rule_.size();
+}
+
+std::vector<Rule> Grammar::GetRules() const {
+  return rules_;
 }
 
 Letter Rule::GetLetterRight(int index) const {
@@ -77,4 +87,18 @@ void Grammar::PrintRules() {
 
 std::vector<Letter> Rule::GetRule() const {
   return rule_;
+}
+
+size_t Grammar::GetTerminal() const {
+  return terminal_.size();
+}
+
+
+bool Grammar::CheckRule(const Rule& other_rule) const {
+  for (int i = 0; i < rules_.size(); i++) {
+    if ((rules_[i].GetTerminal() == other_rule.GetTerminal()) && (rules_[i].GetRule() == other_rule.GetRule())) {
+      return true;
+    }
+  }
+  return false;
 }

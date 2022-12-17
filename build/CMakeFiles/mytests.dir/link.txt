@@ -1,0 +1,1 @@
+/usr/bin/c++ -fprofile-arcs -ftest-coverage --coverage CMakeFiles/mytests.dir/tests.cpp.o CMakeFiles/mytests.dir/cpp/Grammar.cpp.o CMakeFiles/mytests.dir/cpp/Letter.cpp.o CMakeFiles/mytests.dir/cpp/Parser.cpp.o CMakeFiles/mytests.dir/cpp/Situation.cpp.o -o mytests  lib/libgtest.a 

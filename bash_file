@@ -1,2 +1,2 @@
-g++ main.cpp hpp/Grammar.hpp cpp/Grammar.cpp hpp/Letter.hpp cpp/Letter.cpp -o pr
-./pr
+g++ main.cpp hpp/Grammar.hpp cpp/Grammar.cpp hpp/Letter.hpp cpp/Letter.cpp hpp/Parser.hpp cpp/Parser.cpp -o pr
+cat test |./pr

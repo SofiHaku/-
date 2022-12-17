@@ -12,4 +12,6 @@ class Letter {
   bool GetIsTerminal() const;
   char GetLetter() const;
   void SetLetter(char letter);
+  bool operator<(const Letter& other) const;
+  bool operator==(const Letter& other) const;
 };

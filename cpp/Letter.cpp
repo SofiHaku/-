@@ -23,3 +23,11 @@ void Letter::SetLetter(char letter) {
   letter_ = letter;
   is_terminal_ = isupper(letter);
 }
+
+bool Letter::operator<(const Letter& other) const {
+  return letter_ < other.letter_;
+}
+
+bool Letter::operator==(const Letter& other) const {
+  return letter_ == other.letter_;
+}
