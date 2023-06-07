@@ -1,5 +1,5 @@
-#include "./hpp/Grammar.hpp"
-#include "./hpp/Parser.hpp"
+#pragma once
+#include "./hpp/Normal.hpp"
 #include <iostream>
 
 int main () {
@@ -12,14 +12,7 @@ int main () {
     grammar.SetRule(str);
   }
   grammar.PrintRules();
-  std::string word = "bbbbbb";
-  ParserCYK parser;
-  if (parser.Check_word(word, grammar)) {
-    std::cout << "YES\n";
-  } else {
-    std::cout << "NO\n";
-  }
-
+  DeleteLong(grammar);
 
   return 0;
 }

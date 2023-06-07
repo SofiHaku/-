@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/mytests.dir/tests.cpp.o CMakeFiles/mytests.dir/cpp/Grammar.cpp.o CMakeFiles/mytests.dir/cpp/Letter.cpp.o CMakeFiles/mytests.dir/cpp/Parser.cpp.o -o mytests  lib/libgtest.a 

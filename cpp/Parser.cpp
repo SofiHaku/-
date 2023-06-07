@@ -29,3 +29,29 @@ void ParserCYK::ProcessWord(size_t size_word) {
     }
   }
 }
+
+bool ParserCYK::Check_word(std::string &word, Grammar& grammar) {
+  word_ = word;
+  grammar_ = grammar;
+
+  dp.clear();
+
+  for (auto i : grammar.terminal_) {
+    std::pair<char, std::vector<std::vector<bool>>> new_pair(
+        i.GetLetter(), std::vector<std::vector<bool>>(
+               word.size() + 1, std::vector<bool>(word.size() + 1, false)));
+    dp.insert(new_pair);
+  }
+
+  if (word_ == "") {
+    return grammar_.CheckRule(Rule("S->"));
+  }
+
+  InitOneLetters();
+
+  for (size_t size_word = 2; size_word < word_.size() + 1; size_word++) {
+    ProcessWord(size_word);
+  }
+
+  return dp.at('S')[0][word_.size() - 1];
+}

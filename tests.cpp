@@ -6,7 +6,6 @@
 #include <iostream>
 #include <vector>
 
-
 std::string CreateWord(bool* is_normal, int size) {
   std::string word;
   int max = 0;
